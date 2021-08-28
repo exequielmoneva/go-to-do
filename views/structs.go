@@ -1,7 +1,7 @@
 package views
 
 type Response struct {
-	// ` se escribe con Alt+96
+	// ` == Alt+96
 	Body interface{} `json:"body"`
 }
 
