@@ -10,6 +10,8 @@ func Register() *gin.Engine {
 	{
 		todoRoutes.GET("", GetTodos)
 		todoRoutes.POST("", CreateTodo)
+		todoRoutes.PUT(":id", EditTodo)
+		todoRoutes.DELETE(":id", DeleteTodo)
 	}
 	return r
 }
