@@ -5,7 +5,7 @@ type Response struct {
 	Body interface{} `json:"body"`
 }
 
-type Todo struct {
+type TodoResponse struct {
 	Todo string `json:"todo"`
 	Name string `json:"name"`
 	Id   string

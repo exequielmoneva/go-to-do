@@ -1,9 +1,18 @@
 package model
 
-func CreateTodo() error {
-	insertQ, err := con.Query("INSERT INTO TODO($1, $2)", "Exequiel", "Mejorar esta API")
-	defer insertQ.Close()
-	if err != nil {
+import (
+	"fmt"
+	"go-boilerplate/views"
+	"gorm.io/gorm"
+)
+
+func CreateTodo(name string, todo string, id string) *gorm.DB {
+	if err := con.Create(&views.Todo{
+		Todo: todo,
+		Name: name,
+		Id:   id,
+	}); err != nil {
+		fmt.Println(err)
 		return err
 	}
 	return nil

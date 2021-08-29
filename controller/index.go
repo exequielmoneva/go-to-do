@@ -3,11 +3,12 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"go-boilerplate/model"
 	"go-boilerplate/views"
 	"net/http"
 )
 
-var todos []views.Todo // es una slice de Todo
+var todos []views.TodoResponse // es una slice de Todo
 func GetTodos(c *gin.Context) {
 	if todos == nil {
 		c.JSON(http.StatusOK, gin.H{})
@@ -25,8 +26,8 @@ func CreateTodo(c *gin.Context) {
 		return
 	}
 	reqBody.Id = uuid.New().String()
-	todos = append(todos, reqBody)
-	c.JSON(http.StatusCreated, views.Todo{
+	model.CreateTodo(reqBody.Name, reqBody.Todo, reqBody.Id)
+	c.JSON(http.StatusCreated, views.TodoResponse{
 		Todo: reqBody.Todo,
 		Name: reqBody.Name,
 		Id:   reqBody.Id,
@@ -35,7 +36,7 @@ func CreateTodo(c *gin.Context) {
 
 func EditTodo(c *gin.Context) {
 	id := c.Param("id")
-	var reqBody views.Todo
+	var reqBody views.TodoResponse
 	if err := c.ShouldBindJSON(&reqBody); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{
 			"error": "invalid request body",
@@ -46,7 +47,7 @@ func EditTodo(c *gin.Context) {
 		if todo.Id == id {
 			if reqBody.Name != "" {
 				todos[idx].Name = reqBody.Name
-				c.JSON(http.StatusOK, views.Todo{
+				c.JSON(http.StatusOK, views.TodoResponse{
 					Todo: todo.Todo,
 					Name: reqBody.Name,
 					Id:   id,
@@ -54,7 +55,7 @@ func EditTodo(c *gin.Context) {
 			}
 			if reqBody.Todo != "" {
 				todos[idx].Todo = reqBody.Todo
-				c.JSON(http.StatusOK, views.Todo{
+				c.JSON(http.StatusOK, views.TodoResponse{
 					Todo: reqBody.Todo,
 					Name: todo.Name,
 					Id:   id,
