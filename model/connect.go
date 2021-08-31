@@ -3,17 +3,23 @@ package model
 import (
 	"database/sql"
 	"fmt"
-	"log"
+	"go-boilerplate/views"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
-var con *sql.DB
+var con *gorm.DB
 
 func Connect() *sql.DB {
-	db, err := sql.Open("mysql", "root:1234@/database(tcp:localhost:3306)")
+	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
 	if err != nil {
-		log.Fatal(err)
+		panic("failed to connect database")
 	}
+	// Migrate the schema
+	db.AutoMigrate(&views.Todo{})
+
 	fmt.Println("\nConnected to database")
 	con = db
-	return db
+	sqlDB, err := db.DB()
+	return sqlDB
 }
