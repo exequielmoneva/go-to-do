@@ -9,9 +9,12 @@ func Register() *gin.Engine {
 	todoRoutes := r.Group("/")
 	{
 		todoRoutes.GET("", GetTodos)
+		todoRoutes.GET("single/:id", GetTodoById)
+		todoRoutes.GET("user/:username", GetTodoFromUser)
+		todoRoutes.GET("health", Health)
 		todoRoutes.POST("", CreateTodo)
-		todoRoutes.PUT(":id", EditTodo)
-		todoRoutes.DELETE(":id", DeleteTodo)
+		todoRoutes.PUT("edit/:id", EditTodo)
+		todoRoutes.DELETE("delete/:id", DeleteTodo)
 	}
 	return r
 }

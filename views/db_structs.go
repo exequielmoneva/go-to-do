@@ -2,12 +2,10 @@ package views
 
 import (
 	_ "gorm.io/driver/sqlite"
-	"gorm.io/gorm"
 )
 
 type Todo struct {
-	gorm.Model
+	Id   string `gorm:"primarykey"`
 	Todo string
 	Name string
-	Id   string
 }

@@ -9,13 +9,6 @@ import (
 )
 
 var todos []views.TodoResponse // es una slice de Todo
-func GetTodos(c *gin.Context) {
-	if todos == nil {
-		c.JSON(http.StatusOK, gin.H{})
-	} else {
-		c.JSON(http.StatusOK, todos)
-	}
-}
 
 func CreateTodo(c *gin.Context) {
 	var reqBody views.Todo
@@ -34,6 +27,34 @@ func CreateTodo(c *gin.Context) {
 	})
 }
 
+func GetTodos(c *gin.Context) {
+	var result = model.ReadAll()
+	if result == nil {
+		c.JSON(http.StatusOK, gin.H{})
+	} else {
+		c.JSON(http.StatusOK, result)
+	}
+}
+
+func GetTodoById(c *gin.Context) {
+	id := c.Param("id")
+	var result = model.ReadById(id)
+	if result == nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{
+			"error": "invalid id",
+		})
+		return
+	} else {
+		c.JSON(http.StatusOK, result)
+	}
+}
+
+func GetTodoFromUser(c *gin.Context) {
+	username := c.Param("username")
+	var result = model.ReadByName(username)
+	c.JSON(http.StatusOK, result)
+}
+
 func EditTodo(c *gin.Context) {
 	id := c.Param("id")
 	var reqBody views.TodoResponse
@@ -43,30 +64,8 @@ func EditTodo(c *gin.Context) {
 		})
 		return
 	}
-	for idx, todo := range todos {
-		if todo.Id == id {
-			if reqBody.Name != "" {
-				todos[idx].Name = reqBody.Name
-				c.JSON(http.StatusOK, views.TodoResponse{
-					Todo: todo.Todo,
-					Name: reqBody.Name,
-					Id:   id,
-				})
-			}
-			if reqBody.Todo != "" {
-				todos[idx].Todo = reqBody.Todo
-				c.JSON(http.StatusOK, views.TodoResponse{
-					Todo: reqBody.Todo,
-					Name: todo.Name,
-					Id:   id,
-				})
-			}
-			return
-		}
-	}
-	c.JSON(http.StatusNotFound, gin.H{
-		"message": "invalid to-do id",
-	})
+	model.EditTodo(id, reqBody, c)
+	c.JSON(http.StatusOK, gin.H{})
 }
 
 func DeleteTodo(c *gin.Context) {
@@ -84,5 +83,11 @@ func DeleteTodo(c *gin.Context) {
 	}
 	c.JSON(http.StatusNotFound, gin.H{
 		"message": "invalid to-do id",
+	})
+}
+
+func Health(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"message": "API is up",
 	})
 }
