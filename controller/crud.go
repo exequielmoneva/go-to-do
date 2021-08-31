@@ -8,8 +8,6 @@ import (
 	"net/http"
 )
 
-var todos []views.TodoResponse // es una slice de Todo
-
 func CreateTodo(c *gin.Context) {
 	var reqBody views.Todo
 	if err := c.ShouldBindJSON(&reqBody); err != nil {
@@ -65,25 +63,12 @@ func EditTodo(c *gin.Context) {
 		return
 	}
 	model.EditTodo(id, reqBody, c)
-	c.JSON(http.StatusOK, gin.H{})
 }
 
 func DeleteTodo(c *gin.Context) {
 	id := c.Param("id")
 
-	for idx, todo := range todos {
-		if todo.Id == id {
-			// the 3 points at the end extract all the values from the slice
-			todos = append(todos[:idx], todos[idx+1:]...)
-			c.JSON(http.StatusOK, gin.H{
-				"message": "to-do successfully deleted",
-			})
-			return
-		}
-	}
-	c.JSON(http.StatusNotFound, gin.H{
-		"message": "invalid to-do id",
-	})
+	model.DeleteTodo(id, c)
 }
 
 func Health(c *gin.Context) {
