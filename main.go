@@ -2,9 +2,8 @@ package main
 
 import (
 	_ "github.com/gin-gonic/gin"
-	_ "github.com/go-sql-driver/mysql" // MySQL driver
-	"go-boilerplate/controller"
-	"go-boilerplate/model"
+	"go-to-do/controller"
+	"go-to-do/model"
 	"log"
 )
 

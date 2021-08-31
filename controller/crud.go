@@ -3,8 +3,8 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	"go-boilerplate/model"
-	"go-boilerplate/views"
+	"go-to-do/model"
+	"go-to-do/views"
 	"net/http"
 )
 

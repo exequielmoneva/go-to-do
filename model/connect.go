@@ -3,7 +3,7 @@ package model
 import (
 	"database/sql"
 	"fmt"
-	"go-boilerplate/views"
+	"go-to-do/views"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )

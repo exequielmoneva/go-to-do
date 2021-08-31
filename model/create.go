@@ -2,7 +2,7 @@ package model
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-boilerplate/views"
+	"go-to-do/views"
 	"gorm.io/gorm"
 	"net/http"
 )

@@ -1,7 +1,7 @@
 package model
 
 import (
-	"go-boilerplate/views"
+	"go-to-do/views"
 )
 
 var todo_ []views.Todo
