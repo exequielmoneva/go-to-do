@@ -2,6 +2,10 @@ module go-to-do
 
 go 1.17
 
+replace (
+	 go-boilerplate => ./go-to-do
+)
+
 require (
 	github.com/gin-gonic/gin v1.7.4
 	github.com/google/uuid v1.3.0
