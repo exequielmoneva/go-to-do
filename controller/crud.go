@@ -9,6 +9,7 @@ import (
 )
 
 func CreateTodo(c *gin.Context) {
+	// Create a New To-do
 	var reqBody views.Todo
 	if err := c.ShouldBindJSON(&reqBody); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{
@@ -35,6 +36,7 @@ func GetTodos(c *gin.Context) {
 }
 
 func GetTodoById(c *gin.Context) {
+	// Get an existing to-do based on the given id as queryparam
 	id := c.Param("id")
 	var result = model.ReadById(id)
 	if result == nil {
@@ -48,12 +50,14 @@ func GetTodoById(c *gin.Context) {
 }
 
 func GetTodoFromUser(c *gin.Context) {
+	// Get an existing to-do based on the given username as queryparam
 	username := c.Param("username")
 	var result = model.ReadByName(username)
 	c.JSON(http.StatusOK, result)
 }
 
 func EditTodo(c *gin.Context) {
+	// Edit an existing to do matching by its id
 	id := c.Param("id")
 	var reqBody views.TodoResponse
 	if err := c.ShouldBindJSON(&reqBody); err != nil {
@@ -66,12 +70,14 @@ func EditTodo(c *gin.Context) {
 }
 
 func DeleteTodo(c *gin.Context) {
+	// Delete an existing to do matching by its id
 	id := c.Param("id")
 
 	model.DeleteTodo(id, c)
 }
 
 func Health(c *gin.Context) {
+	// Check whether the API is working or not
 	c.JSON(http.StatusOK, gin.H{
 		"message": "API is up",
 	})
