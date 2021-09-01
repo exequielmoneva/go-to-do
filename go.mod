@@ -2,10 +2,6 @@ module go-to-do
 
 go 1.17
 
-replace (
-	 go-boilerplate => ./go-to-do
-)
-
 require (
 	github.com/gin-gonic/gin v1.7.4
 	github.com/google/uuid v1.3.0
@@ -32,3 +28,5 @@ require (
 	golang.org/x/sys v0.0.0-20200116001909-b77594299b42 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 )
+
+replace go-boilerplate => ./go-to-do
