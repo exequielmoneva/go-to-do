@@ -7,6 +7,7 @@ A to-do API for all your reminders
 - Gorm as the ORM
 - MVC pattern
 <br>
+
 # Installation
 To use the API on windows, you can simply run the go-to-do.exe file
 
